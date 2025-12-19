@@ -1,0 +1,32 @@
+{
+  "name": "girohub-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "file": "node --import=tsx --watch ./src/file.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.1",
+    "@types/jsonwebtoken": "^9.0.10",
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.5",
+    "express": "^5.2.1",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.3",
+    "nodemailer": "^6.10.1",
+    "uuid": "^13.0.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/node": "^24.10.1",
+    "@types/nodemailer": "^7.0.4",
+    "dotenv": "^17.2.3",
+    "prisma": "^6.19.1",
+    "tsx": "^4.7.0",
+    "typescript": "^5.9.3"
+  }
+}

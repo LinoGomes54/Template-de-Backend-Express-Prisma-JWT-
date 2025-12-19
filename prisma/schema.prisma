@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum ContactStatus {
+  PENDENTE
+  EM_ANDAMENTO
+  FINALIZADO
+}
+
+enum VerificationType {
+  EMAIL_VERIFICATION
+  ACCOUNT_RECOVERY
+}
+
+model User {
+  id              String            @id @default(uuid())
+  nome            String
+  sobrenome       String
+  telefone        String
+  email           String            @unique
+  passwordHash    String
+  emailVerificado Boolean           @default(false)
+  plano           String?
+  tokens          Int?
+  status          UserStatus        @default(ACTIVE)
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  verificationCodes VerificationCode[]
+}
+
+model Contact {
+  id        String         @id @default(uuid())
+  nome      String
+  email     String
+  mensagem  String
+  status    ContactStatus  @default(PENDENTE)
+  createdAt DateTime       @default(now())
+}
+
+model VerificationCode {
+  id         String            @id @default(uuid())
+  code       String
+  expiresAt  DateTime
+  type       VerificationType
+  used       Boolean           @default(false)
+  userId     String
+  createdAt  DateTime          @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, type, createdAt])
+}
+
